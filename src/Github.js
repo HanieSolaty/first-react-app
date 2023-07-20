@@ -1,29 +1,19 @@
 import React from "react";
 
-export default function Search() {
+export default function Github() {
   return (
-    <div class="row pb-3">
-      <div class="mb-1 col-6">
-        <form action="">
-          <input
-            type="text"
-            class="form-control"
-            id="search-city"
-            aria-describedby="search city"
-            placeholder="Enter a city.."
-          />
-        </form>
-      </div>
-      <div class="mb-1 col-3">
-        <button id="searchBtn" type="submit" class="btn btn-primary px-4">
-          Search
-        </button>
-      </div>
-      <div class="mb-1 col-3">
-        <button id="currentBtn" type="submit" class="btn btn-primary px-4">
-          Current
-        </button>
-      </div>
+    <div class="row pt-3">
+      <p class="text-center mb-0 github-link">
+        <a
+          class="github"
+          href="https://github.com/HanieSolaty/Vanila-Weather-App"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open-source code{" "}
+        </a>
+        by Hanie Solaty
+      </p>
     </div>
   );
 }
