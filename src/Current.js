@@ -1,5 +1,5 @@
 import React from "react";
-import MyImagae from "./download1.png";
+import MyImagae from "./images/download1.png";
 
 export default function Current() {
   return (
@@ -22,11 +22,11 @@ export default function Current() {
           <p class="mb-0">
             Humidity:
             <span class="weather-param">
-              <span id="humidity">10</span>%
+              <span id="humidity"> 10</span>%
             </span>
             , Wind:
             <span class="weather-param">
-              <span id="wind">1</span>km/h
+              <span id="wind"> 1</span>km/h
             </span>
           </p>
         </div>

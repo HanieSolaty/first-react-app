@@ -6,9 +6,9 @@ export default function Github() {
       <p class="text-center mb-0 github-link">
         <a
           class="github"
-          href="https://github.com/HanieSolaty/Vanila-Weather-App"
+          href="https://github.com/HanieSolaty/first-react-app"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           Open-source code{" "}
         </a>
