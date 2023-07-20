@@ -1,32 +1,96 @@
-import React from "react";
-import MyImagae from "./images/download1.png";
+import React, { useState } from "react";
+import axios from "axios";
 
-export default function Current() {
+export default function Current(props) {
+  let [city, setCity] = useState(null);
+  let [description, setDescription] = useState(null);
+  let [humidity, setHumidity] = useState(null);
+  let [wind, setWind] = useState(null);
+  let [temp, setTemp] = useState(null);
+  let [iconCode, setIiconCode] = useState(null);
+  let [dateStr, setDateStr] = useState(null);
+
+  function setApiUrl(city) {
+    const apiKey = "502dc8f7ae36e57af1974e18d16a86f8";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    return apiUrl;
+  }
+
+  function setDate() {
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    let localDate = new Date();
+    let month = months[localDate.getMonth()];
+    let date = localDate.getDate();
+    let day = days[localDate.getDay()];
+    let hour = `0${localDate.getHours()}`.slice(-2);
+    let min = `0${localDate.getMinutes()}`.slice(-2);
+    let dateString = `${month} ${date}, ${day} ${hour}:${min}`;
+    setDateStr(dateString);
+  }
+
+  function setWeatherAtrr(response) {
+    setCity(response.data.name);
+    setDescription(response.data.weather[0].description);
+    setHumidity(Math.round(response.data.main.humidity));
+    setWind(Math.round(response.data.wind.speed));
+    setTemp(Math.round(response.data.main.temp));
+    setIiconCode(response.data.weather[0].icon);
+
+    // Forecast location
+    /* let lat = response.data.coord.lat;
+    let lon = response.data.coord.lon;
+    const apiKey = "502dc8f7ae36e57af1974e18d16a86f8";
+    let apiUrlForecast = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrlForecast).then(displayForecast); */
+  }
+
+  function setDafault() {
+    setDate();
+    axios.get(setApiUrl("isfahan")).then(setWeatherAtrr);
+  }
+
+  setDafault();
+
   return (
     <div class="row pb-4">
       <div class="col-6">
         <div class="row">
-          <h1 id="city">Isfahan</h1>
+          <h1 id="city">{city}</h1>
         </div>
         <div class="row">
           <p class="mb-0" id="description">
-            clear sky
+            {description}
           </p>
         </div>
         <div class="row">
           <p class="mb-0" id="date">
-            Jul 16, Sun 09:39
+            {dateStr}
           </p>
         </div>
         <div class="row">
           <p class="mb-0">
             Humidity:
             <span class="weather-param">
-              <span id="humidity"> 10</span>%
+              <span id="humidity"> {humidity}</span>%
             </span>
             , Wind:
             <span class="weather-param">
-              <span id="wind"> 1</span>km/h
+              <span id="wind"> {wind}</span>km/h
             </span>
           </p>
         </div>
@@ -35,11 +99,11 @@ export default function Current() {
         <img
           id="temp-icon"
           class="main-temp-icon"
-          src={MyImagae}
+          src={iconCode}
           alt="weather icon"
         />
         <h1 class="main-temp-text">
-          <span id="temp">30</span>
+          <span id="temp">{temp}</span>
           <sup class="temp-unit">°C</sup>
         </h1>
       </div>
