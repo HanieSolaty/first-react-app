@@ -25,9 +25,6 @@ export default function Current(props) {
   useEffect(() => {
     setDate();
     setWeatherAtrr();
-    console.log(`date is ${props.dateStrAttr}`);
-    console.log(`url is ${props.urlAttr}`);
-    console.log(`city is ${props.cityAtt}`);
   }, [props.urlAttr]);
 
   return (

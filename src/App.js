@@ -18,7 +18,6 @@ export default function App() {
   const setTheUrl = (address) => {
     axios.get(address).then(function(response) {
       setUrl(address);
-      console.log(response.data);
       setCity(response.data.name);
       setDescription(response.data.weather[0].description);
       setHumidity(Math.round(response.data.main.humidity));
