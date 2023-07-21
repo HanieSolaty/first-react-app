@@ -1,110 +1,75 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 
 export default function Current(props) {
-  let [city, setCity] = useState(null);
-  let [description, setDescription] = useState(null);
-  let [humidity, setHumidity] = useState(null);
-  let [wind, setWind] = useState(null);
-  let [temp, setTemp] = useState(null);
-  let [iconCode, setIiconCode] = useState(null);
-  let [dateStr, setDateStr] = useState(null);
-
-  function setApiUrl(city) {
-    const apiKey = "502dc8f7ae36e57af1974e18d16a86f8";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-    return apiUrl;
-  }
+  let [cityVal, setCityVal] = useState(null);
+  let [descriptionVal, setDescriptionVal] = useState(null);
+  let [humidityVal, setHumidityVal] = useState(null);
+  let [windVal, setWindVal] = useState(null);
+  let [tempVal, setTempVal] = useState(null);
+  let [iconCodeVal, setIiconCodeVal] = useState(null);
+  let [dateStrVal, setDateStrVal] = useState(null);
 
   function setDate() {
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-
-    let localDate = new Date();
-    let month = months[localDate.getMonth()];
-    let date = localDate.getDate();
-    let day = days[localDate.getDay()];
-    let hour = `0${localDate.getHours()}`.slice(-2);
-    let min = `0${localDate.getMinutes()}`.slice(-2);
-    let dateString = `${month} ${date}, ${day} ${hour}:${min}`;
-    setDateStr(dateString);
+    setDateStrVal(props.dateStrAttr);
   }
 
-  function setWeatherAtrr(response) {
-    setCity(response.data.name);
-    setDescription(response.data.weather[0].description);
-    setHumidity(Math.round(response.data.main.humidity));
-    setWind(Math.round(response.data.wind.speed));
-    setTemp(Math.round(response.data.main.temp));
-    setIiconCode(response.data.weather[0].icon);
-
-    // Forecast location
-    /* let lat = response.data.coord.lat;
-    let lon = response.data.coord.lon;
-    const apiKey = "502dc8f7ae36e57af1974e18d16a86f8";
-    let apiUrlForecast = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
-    axios.get(apiUrlForecast).then(displayForecast); */
+  function setWeatherAtrr() {
+    setCityVal(props.cityAttr);
+    setDescriptionVal(props.descriptionAttr);
+    setHumidityVal(props.humidityAttr);
+    setWindVal(props.windAttr);
+    setTempVal(props.tempAttr);
+    setIiconCodeVal(props.iconCodeAttr);
   }
 
-  function setDafault() {
+  useEffect(() => {
     setDate();
-    axios.get(setApiUrl("isfahan")).then(setWeatherAtrr);
-  }
-
-  setDafault();
+    setWeatherAtrr();
+    console.log(`date is ${props.dateStrAttr}`);
+    console.log(`url is ${props.urlAttr}`);
+    console.log(`city is ${props.cityAtt}`);
+  }, [props.urlAttr]);
 
   return (
-    <div class="row pb-4">
-      <div class="col-6">
-        <div class="row">
-          <h1 id="city">{city}</h1>
+    <div className="row pb-4">
+      <div className="col-6">
+        <div className="row">
+          <h1 id="city">{cityVal}</h1>
         </div>
-        <div class="row">
-          <p class="mb-0" id="description">
-            {description}
+        <div className="row">
+          <p className="mb-0" id="description">
+            {descriptionVal}
           </p>
         </div>
-        <div class="row">
-          <p class="mb-0" id="date">
-            {dateStr}
+        <div className="row">
+          <p className="mb-0" id="date">
+            {dateStrVal}
           </p>
         </div>
-        <div class="row">
-          <p class="mb-0">
+        <div className="row">
+          <p className="mb-0">
             Humidity:
-            <span class="weather-param">
-              <span id="humidity"> {humidity}</span>%
+            <span className="weather-param">
+              <span id="humidity"> {humidityVal}</span>%
             </span>
             , Wind:
-            <span class="weather-param">
-              <span id="wind"> {wind}</span>km/h
+            <span className="weather-param">
+              <span id="wind"> {windVal}</span>
+              km/h
             </span>
           </p>
         </div>
       </div>
-      <div class="offset-2 col-4 align-self-center pt-2">
+      <div className="offset-2 col-4 align-self-center pt-2">
         <img
           id="temp-icon"
-          class="main-temp-icon"
-          src={iconCode}
+          className="main-temp-icon"
+          src={iconCodeVal}
           alt="weather icon"
         />
-        <h1 class="main-temp-text">
-          <span id="temp">{temp}</span>
-          <sup class="temp-unit">°C</sup>
+        <h1 className="main-temp-text">
+          <span id="temp">{tempVal}</span>
+          <sup className="temp-unit">°C</sup>
         </h1>
       </div>
     </div>

@@ -1,32 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Search({ setTheUrl }) {
   let [searchCity, setSearchCity] = useState(null);
 
-  function newSearch(event) {
-    setSearchCity(event.target.value);
-  }
-
-  //Search functionality
-  function searchProcess(event) {
-    event.preventDefault();
-    setTheUrl(setApiUrl(searchCity));
-    setSearchCity(null);
-    //setDate();
-  }
-
-  //Current Button functionality
   function setApiUrl(city) {
     const apiKey = "502dc8f7ae36e57af1974e18d16a86f8";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
     return apiUrl;
   }
 
+  useEffect(() => {
+    setTheUrl(setApiUrl("isfahan"));
+  }, []);
+
+  //Default is Isfahan city
+  //  setTheUrl(setApiUrl("isfahan"));
+
+  //Search functionality
+  function newSearch(event) {
+    setSearchCity(event.target.value);
+  }
+
+  function searchProcess(event) {
+    event.preventDefault();
+
+    setTheUrl(setApiUrl(searchCity));
+  }
+
+  //Current Button functionality
   function getCityName(response) {
     let cityName = response.data[0].name;
+
     setTheUrl(setApiUrl(cityName));
-    // axios.get(setApiUrl(cityName)).then(setWeatherAtrr);
   }
 
   function handleLocation(location) {
